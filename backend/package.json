@@ -1,0 +1,46 @@
+{
+  "name": "citaapp-backend",
+  "version": "1.0.0",
+  "description": "REST API for the CitaApp medical appointment platform",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "test": "echo \"No tests configured yet\""
+  },
+  "keywords": [
+    "express",
+    "jwt",
+    "postgres",
+    "appointments"
+  ],
+  "author": "CitaApp Team",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^2.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.0",
+    "dotenv": "^16.4.1",
+    "express": "^4.19.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.10.0",
+    "sequelize": "^6.10.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/helmet": "^4.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.10.1",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
