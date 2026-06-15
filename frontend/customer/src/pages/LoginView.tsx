@@ -22,11 +22,11 @@ export const LoginView: React.FC = () => {
 
     try {
       await authService.login(email, password)
-      await checkAuth() // Actualiza el estado de autenticación global
-      navigate("/dashboard") // Redirige al dashboard si el login es exitoso y aprobado
+      await checkAuth()
+      navigate("/dashboard")
     } catch (error: any) {
       if (error.message === "Your account has not been approved yet.") {
-        navigate("/pending-approval") // Redirige a la página de cuenta pendiente
+        navigate("/pending-approval")
       } else {
         setErrorMessage(
           error.message || "Credenciales inválidas. Intente de nuevo.",
@@ -46,7 +46,7 @@ export const LoginView: React.FC = () => {
       loading={loading}
       errorMessage={errorMessage}
       onSubmit={handleSubmit}
-      onNavigateRegister={() => navigate("/register")}
+      onNavigateRegister={() => navigate("/auth/register")}
     />
   )
 }

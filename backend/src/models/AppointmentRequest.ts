@@ -71,7 +71,6 @@ AppointmentRequest.init(
   },
 )
 
-// Definición de Relaciones
 User.hasMany(AppointmentRequest, { foreignKey: "userId", as: "appointments" })
 AppointmentRequest.belongsTo(User, { foreignKey: "userId", as: "user" })
 

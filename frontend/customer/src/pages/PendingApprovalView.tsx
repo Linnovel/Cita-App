@@ -7,12 +7,10 @@ export const PendingApprovalView: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Si el usuario ya está aprobado mientras tiene esta vista abierta, redirigir
     if (user?.isApproved) {
       navigate("/dashboard")
     }
 
-    // Verificar el estado de la cuenta automáticamente cada 15 segundos
     const interval = setInterval(async () => {
       await checkAuth()
     }, 15000)

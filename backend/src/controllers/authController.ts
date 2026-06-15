@@ -40,13 +40,14 @@ export const register = async (
         .json({ message: "Verifique la información e intente nuevamente" })
     }
 
-    // Verificar si el usuario o cédula ya existen (Opcional, pero muy recomendado)
     const existingUsername = await User.findOne({ where: { usuario } })
     if (existingUsername) {
       return res.status(409).json({ message: "Username already taken." })
     }
 
-    const existingID = await User.findOne({ where: { cedula } })
+    const existingID = await User.findOne({
+      where: { cedula: cedula },
+    })
     if (existingID) {
       return res
         .status(409)
@@ -63,6 +64,22 @@ export const register = async (
       password: hashedPassword,
       role: "client",
       isApproved: false,
+    })
+
+    // Generamos token y cookie para login automático tras registro
+    const token = createToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    })
+    const appContext = req.headers["x-app-context"] || "customer"
+    const cookieName = appContext === "admin" ? "admin_token" : "customer_token"
+
+    res.cookie(cookieName, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 día
     })
 
     return res.status(201).json({
@@ -105,19 +122,17 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     return res.status(401).json({ message: "Invalid credentials." })
   }
 
-  if (user.role === "client" && !user.isApproved) {
-    return res.status(403).json({
-      message: "Your account has not been approved yet.",
-    })
-  }
-
   const token = createToken({ id: user.id, email: user.email, role: user.role })
 
-  res.cookie("token", token, {
+  // Identificamos el contexto desde el header enviado por el frontend
+  const appContext = req.headers["x-app-context"] || "customer"
+  const cookieName = appContext === "admin" ? "admin_token" : "customer_token"
+
+  res.cookie(cookieName, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000, // 1 día
   })
 
   return res.status(200).json({
@@ -136,7 +151,10 @@ export const logout = async (
   _req: Request,
   res: Response,
 ): Promise<Response> => {
-  res.clearCookie("token", {
+  const appContext = _req.headers["x-app-context"]
+  const cookieName = appContext === "admin" ? "admin_token" : "customer_token"
+
+  res.clearCookie(cookieName, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

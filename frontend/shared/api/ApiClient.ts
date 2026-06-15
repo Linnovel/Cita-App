@@ -16,6 +16,7 @@ export class ApiClient {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        "X-App-Context": import.meta.env.VITE_APP_CONTEXT || "customer",
         ...options.headers,
       },
       credentials: "include",

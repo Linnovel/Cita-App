@@ -56,10 +56,8 @@ router.post("/auth/register", register)
 router.post("/auth/login", login)
 router.post("/auth/logout", logout)
 
-// Endpoint para obtener datos del usuario logueado mediante la cookie
 router.get("/auth/me", authenticateToken, getMe)
 
-// Ruta protegida: Solo administradores pueden crear otros administradores
 router.post(
   "/auth/register-admin",
   authenticateToken,
@@ -103,9 +101,6 @@ router.patch(
   approveUser,
 )
 
-// --- Rutas de Solicitudes de Citas ---
-
-// Cliente: Crear y ver historial propio
 router.post(
   "/appointments",
   authenticateToken,
@@ -119,7 +114,6 @@ router.get(
   getMyRequests,
 )
 
-// Admin: Listar todas y cambiar estatus
 router.get(
   "/appointments/all",
   authenticateToken,

@@ -42,15 +42,14 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    // 2. AGREGADOS AQUÍ para que Sequelize los cree en la Base de Datos
     usuario: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     cedula: {
-      type: DataTypes.STRING,
+      type: DataTypes.BIGINT,
       allowNull: false,
-      unique: true, // Evita que se registren cédulas duplicadas
+      unique: true,
     },
     fullName: {
       type: DataTypes.STRING,

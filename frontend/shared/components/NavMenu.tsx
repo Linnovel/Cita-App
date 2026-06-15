@@ -49,7 +49,7 @@ export default function NavMenu({ name }: NavMenuProps) {
                 Aprobaciones
               </Link>
             </>
-          ) : (
+          ) : user?.isApproved ? (
             <>
               <Link
                 to="/dashboard"
@@ -64,7 +64,7 @@ export default function NavMenu({ name }: NavMenuProps) {
                 Solicitar Cita
               </Link>
             </>
-          )}
+          ) : null}
         </div>
 
         <div className="flex items-center gap-3">

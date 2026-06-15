@@ -5,7 +5,6 @@ import AuthLayout from "@shared/layout/AuthLayout"
 import { AuthProvider } from "@shared/contexts/AuthContext"
 import { ProtectedRoute } from "@shared/components/ProtectedRoute"
 
-// Lazy loading para optimizar rendimiento
 const AdminLoginPage = lazy(() =>
   import("./pages/AdminLoginPage").then((m) => ({ default: m.AdminLoginPage })),
 )

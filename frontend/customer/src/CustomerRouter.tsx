@@ -4,7 +4,6 @@ import { ProtectedRoute } from "@shared/components/ProtectedRoute"
 import { AppLayout } from "@shared/layout/AppLayout"
 import { AuthProvider } from "@shared/contexts/AuthContext"
 
-// Lazy loading para cumplir con el criterio técnico de optimización
 const CustomerPortalPage = lazy(() =>
   import("./pages/CustomerPortalPage").then((m) => ({
     default: m.CustomerPortalPage,

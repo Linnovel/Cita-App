@@ -30,6 +30,9 @@ export const UserModal: React.FC<UserModalProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const isCedulaInvalid =
+    formData.cedula !== "" && !/^\d+$/.test(String(formData.cedula))
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 backdrop-blur-md p-4 animate-in fade-in duration-200">
       <div className="bg-white rounded-[2.5rem] w-full max-w-xl shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200">
@@ -71,13 +74,25 @@ export const UserModal: React.FC<UserModalProps> = ({
                   Cédula / ID
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   name="cedula"
                   value={formData.cedula}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold text-slate-700"
+                  className={`w-full px-5 py-4 bg-slate-50 border rounded-2xl focus:ring-2 outline-none transition-all font-bold text-slate-700 ${
+                    isCedulaInvalid
+                      ? "border-rose-500 focus:ring-rose-500 shadow-sm shadow-rose-100"
+                      : "border-slate-200 focus:ring-blue-600"
+                  }`}
+                  onKeyDown={(e) =>
+                    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
+                  }
                   required
                 />
+                {isCedulaInvalid && (
+                  <p className="text-[10px] text-rose-500 font-black uppercase tracking-wider ml-1 animate-in slide-in-from-top-1">
+                    Solo se permiten números sin puntos ni guiones
+                  </p>
+                )}
               </div>
             </div>
 

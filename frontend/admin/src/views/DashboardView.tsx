@@ -9,6 +9,23 @@ export default function DashboardView() {
   const [stats, setStats] = useState<any>(null)
   const authService = new AuthService(apiClient)
 
+  const [prevPendingCount, setPrevPendingCount] = useState(0)
+  const [showNewRequestModal, setShowNewRequestModal] = useState(false)
+
+  useEffect(() => {
+    const pollStats = async () => {
+      const response = await authService.getDashboardStats()
+      const currentPending = response.stats.pendingClients
+      if (currentPending > prevPendingCount) {
+        setShowNewRequestModal(true)
+      }
+      setPrevPendingCount(currentPending)
+    }
+
+    const interval = setInterval(pollStats, 30000)
+    return () => clearInterval(interval)
+  }, [prevPendingCount])
+
   const fetchStats = async () => {
     try {
       const data = await authService.getDashboardStats()
@@ -20,7 +37,6 @@ export default function DashboardView() {
 
   useEffect(() => {
     fetchStats()
-    // Sincronización automática cada 30 segundos (Polling)
     const interval = setInterval(fetchStats, 30000)
     return () => clearInterval(interval)
   }, [])

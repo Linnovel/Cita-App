@@ -20,7 +20,7 @@ export const createToken = (payload: {
   email: string
   role: string
 }): string => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "8h" })
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" })
 }
 
 export const ensureDefaultAdminUser = async (): Promise<void> => {

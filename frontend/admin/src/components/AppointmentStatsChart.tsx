@@ -1,4 +1,3 @@
-// c:\Users\Luis\Desktop\design engineering\citaapp\frontend\admin\src\components\AppointmentStatsChart.tsx
 import React, { useEffect, useState } from "react"
 import {
   PieChart,
@@ -22,7 +21,6 @@ export const AppointmentStatsChart: React.FC = () => {
     const fetchStats = async () => {
       try {
         const response = await authService.getDashboardStats()
-        // Transformamos: { type: "Odontología", count: "5" } -> { name: "Odontología", value: 5 }
         const formattedData = response.stats.map((item: any) => ({
           name: item.type,
           value: parseInt(item.count, 10),

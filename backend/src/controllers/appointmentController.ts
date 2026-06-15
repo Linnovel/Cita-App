@@ -41,7 +41,6 @@ export const getAppointmentStats = async (
   res: Response,
 ): Promise<Response> => {
   try {
-    // Agregamos el conteo por tipo para el gráfico
     const statsByType = await AppointmentRequest.findAll({
       attributes: ["type", [fn("COUNT", col("id")), "count"]],
       group: ["type"],
@@ -52,9 +51,11 @@ export const getAppointmentStats = async (
       where: { status: "Nuevo" },
     })
 
-    // Conteos de usuarios
     const totalAdmins = await User.count({ where: { role: "admin" } })
     const totalClients = await User.count({ where: { role: "client" } })
+    const pendingClients = await User.count({
+      where: { role: "client", isApproved: false },
+    })
 
     return res.status(200).json({
       stats: statsByType,
@@ -62,6 +63,7 @@ export const getAppointmentStats = async (
       pendingAppointments,
       totalAdmins,
       totalClients,
+      pendingClients,
     })
   } catch (error) {
     return res

@@ -35,6 +35,8 @@ export const ClientRegistryView: React.FC = () => {
 
   useEffect(() => {
     loadClients()
+    const interval = setInterval(loadClients, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   const handleApprove = async (userId: number) => {
@@ -122,6 +124,11 @@ export const ClientRegistryView: React.FC = () => {
       <header>
         <h1 className="text-3xl font-black text-slate-900">
           Control de Clientes
+          {clients.some((c) => !c.isApproved) && (
+            <span className="ml-3 inline-flex items-center px-3 py-1 rounded-full text-xs bg-amber-500 text-white animate-bounce">
+              Pendientes por revisar
+            </span>
+          )}
         </h1>
         <p className="text-slate-500 font-medium">
           Monitorea y aprueba el acceso de los pacientes al sistema.

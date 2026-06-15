@@ -102,7 +102,6 @@ export class AuthService {
     })
   }
 
-  // Métodos de Citas
   async createAppointment(
     type: string,
     observation: string,
@@ -141,6 +140,5 @@ export class AuthService {
     })
   }
 
-  // Alias para compatibilidad con AppointmentStatsChart.tsx
   getAppointmentStats = this.getDashboardStats.bind(this)
 }

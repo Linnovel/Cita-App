@@ -36,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       await authService.logout()
     } finally {
       setUser(null)
-      window.location.href = "/auth/login"
     }
   }
 

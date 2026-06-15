@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:16
     environment:
-      POSTGRES_USER: tu_usuario
-      POSTGRES_PASSWORD: tu_password
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: citaapp_db
     ports:
       - "5432:5432"
@@ -28,13 +26,17 @@ services:
       - "3000:3000"
 
   frontend-admin:
-    build: ./frontend/admin
+    build:
+      context: .
+      dockerfile: frontend/admin/Dockerfile
     container_name: citaapp-admin
     ports:
       - "8081:80" # Acceso en http://localhost:8081
 
   frontend-customer:
-    build: ./frontend/customer
+    build:
+      context: .
+      dockerfile: frontend/customer/Dockerfile
     container_name: citaapp-customer
     ports:
       - "8082:80" # Acceso en http://localhost:8082

@@ -19,12 +19,18 @@ export function useCustomerRegister() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!/^\d+$/.test(cedula)) {
+      setMessage("La cédula debe contener únicamente números.")
+      return
+    }
+
     setLoading(true)
     setMessage("")
     try {
       await authService.register({
         usuario,
-        cedula,
+        cedula: cedula,
         fullName,
         email,
         password,

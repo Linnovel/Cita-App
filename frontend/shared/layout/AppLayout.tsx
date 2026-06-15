@@ -1,11 +1,12 @@
 import React from "react"
 import NavMenu from "@shared/components/NavMenu"
 
-import { Link, Navigate, Outlet } from "react-router-dom"
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom"
 import { useAuth } from "@shared/hooks/useAuth"
 
 export function AppLayout() {
   const { isLoading, user } = useAuth()
+  const location = useLocation()
 
   if (isLoading) {
     return (
@@ -22,6 +23,14 @@ export function AppLayout() {
 
   if (!user) {
     return <Navigate to={"/auth/login"} />
+  }
+
+  if (
+    user.role === "client" &&
+    !user.isApproved &&
+    location.pathname !== "/pending-approval"
+  ) {
+    return <Navigate to="/pending-approval" replace />
   }
 
   return (
